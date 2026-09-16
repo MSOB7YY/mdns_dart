@@ -90,7 +90,10 @@ class MDNSServer {
         );
 
         // Join multicast group
-        _ipv4Socket!.joinMulticast(InternetAddress(_ipv4MulticastAddr));
+        _ipv4Socket!.joinMulticast(
+          InternetAddress(_ipv4MulticastAddr),
+          _config.networkInterface,
+        );
 
         // Set network interface if specified
         if (_config.networkInterface != null) {
@@ -119,7 +122,10 @@ class MDNSServer {
         );
 
         // Join multicast group
-        _ipv6Socket!.joinMulticast(InternetAddress(_ipv6MulticastAddr));
+        _ipv6Socket!.joinMulticast(
+          InternetAddress(_ipv6MulticastAddr),
+          _config.networkInterface,
+        );
 
         // Set network interface if specified (IPv6)
         if (_config.networkInterface != null) {

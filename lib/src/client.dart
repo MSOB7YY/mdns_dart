@@ -366,7 +366,7 @@ class _Client {
           reuseAddress: _reuseAddress,
           ttl: _multicastHops,
         );
-        _ipv4MulticastConn!.joinMulticast(InternetAddress(ipv4mDNS));
+        _ipv4MulticastConn!.joinMulticast(InternetAddress(ipv4mDNS), iface);
         _log(
           'IPv4 multicast socket bound to port $mDNSPort with reusePort=$_reusePort, reuseAddress=$_reuseAddress, multicastHops=$_multicastHops',
         );
@@ -386,7 +386,7 @@ class _Client {
           reuseAddress: _reuseAddress,
           ttl: _multicastHops,
         );
-        _ipv6MulticastConn!.joinMulticast(InternetAddress(ipv6mDNS));
+        _ipv6MulticastConn!.joinMulticast(InternetAddress(ipv6mDNS), iface);
         _log(
           'IPv6 multicast socket bound to port $mDNSPort with reusePort=$_reusePort, reuseAddress=$_reuseAddress, multicastHops=$_multicastHops',
         );
