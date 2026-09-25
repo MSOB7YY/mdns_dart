@@ -103,6 +103,7 @@ class MDNSServer {
         // Listen for packets
         final ipv4Subscription = _ipv4Socket!.listen(
           (event) => _handlePacket(event, _ipv4Socket!),
+          onError: (Object e) => _log('IPv4 socket error: $e'),
         );
         _subscriptions.add(ipv4Subscription);
 
@@ -135,6 +136,7 @@ class MDNSServer {
         // Listen for packets
         final ipv6Subscription = _ipv6Socket!.listen(
           (event) => _handlePacket(event, _ipv6Socket!),
+          onError: (Object e) => _log('IPv6 socket error: $e'),
         );
         _subscriptions.add(ipv6Subscription);
 

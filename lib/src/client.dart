@@ -269,6 +269,10 @@ class _Client {
   bool _closed = false;
   final Completer<void> _closedCompleter = Completer<void>();
 
+  /// First socket error, send failures are reported here asynchronously
+  /// instead of being thrown by [RawDatagramSocket.send].
+  Object? _socketError;
+
   _Client({
     required bool useIPv4,
     required bool useIPv6,
@@ -580,6 +584,9 @@ class _Client {
       _log(
         'Query completed. Total packets received: $receivedPackets, services found: $foundServices',
       );
+
+      final socketError = _socketError;
+      if (foundServices == 0 && socketError != null) throw socketError;
     } finally {
       // Cancel timeout timer if it exists
       timeoutTimer?.cancel();
@@ -631,6 +638,9 @@ class _Client {
           }
         }
       }
+    }, onError: (Object e) {
+      _log('Socket error on ${socket.address.address}:${socket.port}: $e');
+      _socketError ??= e;
     });
   }
 
