@@ -624,6 +624,8 @@ class _Client {
             _log(
               'Parsed valid DNS message with ${message.header.ancount} answers and ${message.header.arcount} additional records',
             );
+            // a read event queued before the query finished can still land after the controller closed.
+            if (messageController.isClosed) return;
             messageController.add(
               _MessageAddr(message, packet.address, packet.port),
             );
