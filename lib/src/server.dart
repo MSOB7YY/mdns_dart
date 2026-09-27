@@ -282,11 +282,10 @@ class MDNSServer {
       // Check the unicast bit (top bit of qclass)
       final wantsUnicast = (question.dnsClass & 0x8000) != 0;
 
-      if (wantsUnicast) {
-        unicastRecords.addAll(records);
-      } else {
-        multicastRecords.addAll(records);
-      }
+      // Unicast responses get a multicast copy too, stateful firewalls
+      // (ufw, firewalld) drop unicast replies to a multicast query.
+      if (wantsUnicast) unicastRecords.addAll(records);
+      multicastRecords.addAll(records);
     }
 
     // Log if no responses and logging enabled
